@@ -31,7 +31,6 @@ class GroupViewSet(viewsets.ModelViewSet):
 class BasicDicewareView(APIView):
     # authentication_classes = [authentication.TokenAuthentication]
     # permission_classes = [permissions.IsAdminUser]
-
     def get(self, request, format=None):
         wordlist = parse_wordlist_from_file(
             "diceware_api/business/wordlists/eff_short_wordlist_1.txt")
@@ -39,7 +38,21 @@ class BasicDicewareView(APIView):
             "wordlist": wordlist,
             "word_count": 6,
             "separator": " ",
-            "phrase_count": 10
+            "phrase_count": 1
         }
+        query_params = request.query_params
+        try:
+            if "word_count" in query_params:
+                kwargs["word_count"] = int(query_params["word_count"])
+            if "phrase_count" in query_params:
+                kwargs["phrase_count"] = int(query_params["phrase_count"])
+            if "separator" in query_params:
+                kwargs["separator"] = query_params["separator"][0]
+        except Exception:
+            return Response("Bad request. Check your query paramaters. Valid query paramaters are: phrase_count=(integer), word_count=(integer), separator=(character).", status=400)
+
         phrases = Phrases(**kwargs).as_dict()
-        return Response(phrases)
+        return Response({
+            "query": request.query_params,
+            "phrases": phrases
+        })
