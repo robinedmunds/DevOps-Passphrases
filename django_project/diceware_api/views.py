@@ -28,7 +28,7 @@ class GroupViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
 
-class BasicDicewareView(APIView):
+class DicewarePassphrasesView(APIView):
     # authentication_classes = [authentication.TokenAuthentication]
     # permission_classes = [permissions.IsAdminUser]
     def get(self, request, format=None):
@@ -43,9 +43,19 @@ class BasicDicewareView(APIView):
         query_params = request.query_params
         try:
             if "word_count" in query_params:
-                kwargs["word_count"] = int(query_params["word_count"])
+                value = int(query_params["word_count"])
+                if value < 1:
+                    value = abs(value)
+                if value > 30:
+                    value = 30
+                kwargs["word_count"] = value
             if "phrase_count" in query_params:
-                kwargs["phrase_count"] = int(query_params["phrase_count"])
+                value = int(query_params["phrase_count"])
+                if value < 1:
+                    value = abs(value)
+                if value > 50:
+                    value = 50
+                kwargs["phrase_count"] = value
             if "separator" in query_params:
                 kwargs["separator"] = query_params["separator"][0]
         except Exception:
