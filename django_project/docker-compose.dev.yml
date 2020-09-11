@@ -2,12 +2,11 @@ version: "3.8"
 services:
   app:
     build:
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
       context: .
     environment:
-      PORT: 8800
+      PORT: 8844
     ports:
       - 4000:8844
     volumes:
       - .:/app
-  proxy: b
