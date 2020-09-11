@@ -1,13 +1,17 @@
 version: "3.8"
 services:
-  app:
+  gunicorn:
     build:
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.gunicorn
       context: .
     environment:
-      PORT: 8800
+      PORT: 8000
+
+  nginx:
+    build:
+      dockerfile: Dockerfile.nginx
+      context: .
+    environment:
+      APP: gunicorn
     ports:
-      - 4000:8844
-    volumes:
-      - .:/app
-  proxy: b
+      - 4444:80
