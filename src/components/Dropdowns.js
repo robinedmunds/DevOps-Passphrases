@@ -78,9 +78,9 @@ const Dropdowns = () => {
             displayEmpty
             className={classes.selectEmpty}
           >
-            <MenuItem value={"#"}>#</MenuItem>
-            <MenuItem value={" "}>Space</MenuItem>
+            <MenuItem value={" "}>[space]</MenuItem>
             <MenuItem value={"-"}>-</MenuItem>
+            <MenuItem value={"#"}>#</MenuItem>
             <MenuItem value={"_"}>_</MenuItem>
           </Select>
         </FormControl>
