@@ -1,0 +1,10 @@
+FROM python:3-alpine
+
+ENV PORT 8000
+
+WORKDIR /app
+COPY requirements-dev.txt .
+RUN pip install -r requirements-dev.txt
+COPY . .
+
+CMD python manage.py runserver 0:$PORT
