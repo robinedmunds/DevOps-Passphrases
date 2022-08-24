@@ -1,12 +1,14 @@
 import type { AppProps } from 'next/app'
+import CssBaseline from '@mui/material/CssBaseline'
 import Layout from '../components/layout'
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
-    <Layout>
-      <Component {...pageProps} />
-    </Layout>
+      <CssBaseline />
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
     </>
   )
 }
