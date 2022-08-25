@@ -10,3 +10,9 @@ A simple passphrase generating web app demonstrating modern dev practices: -
 4. Modules are packages as **Docker** images for portability and scalability
 5. ...
 
+## Issues
+
+1. CLI passphrase generating dependency is not cloned automatically from repo.
+   1. `cd DevOps-Passphrases/backend/diceware_api`
+   2. `git clone https://github.com/robinedmunds/Command-line-Passphrase-Generator.git business`
+
