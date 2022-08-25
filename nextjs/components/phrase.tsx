@@ -10,7 +10,6 @@ const Phrase = ({ phrase }) => {
         justifyContent: "space-evenly",
         margin: "2.0rem 0 2.0rem",
         backgroundColor: "#eee",
-        // columnGap: "4.0rem"
       }}
     >
       <Box

@@ -17,13 +17,6 @@ const Phrases = ({ phrases }) => {
 
       {generatePhrases(phrases)}
 
-      <p
-        css={css(`
-          font-size: 2rem;
-          color: red;
-        `)}>
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Laboriosam repellendus quidem nihil labore incidunt obcaecati aperiam delectus illum molestiae tempora. Minima nisi numquam maiores incidunt esse quidem optio dolores debitis.
-      </p>
     </div>
   )
 }
