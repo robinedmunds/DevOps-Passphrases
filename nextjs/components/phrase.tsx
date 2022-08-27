@@ -3,7 +3,7 @@ import { Box } from "@mui/material"
 import { CopyToClipboard } from "react-copy-to-clipboard"
 import ContentCopyIcon from "@mui/icons-material/ContentCopy"
 
-const Phrase = (props: { phrase: String }) => {
+const Phrase = (props: { phrase: string }) => {
   const [ copied, setIsCopied ] = useState(false)
 
   return (

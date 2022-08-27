@@ -1,25 +1,11 @@
 interface PhraseObj {
-  word_count: Number,
-  separator: String,
-  phrase: String,
-  words: [
-    {
-      word: String,
-      word_list_key: Number
-    },
-    {
-      word: String,
-      word_list_key: Number
-    },
-    {
-      word: String,
-      word_list_key: Number
-    },
-    {
-      word: String,
-      word_list_key: Number
-    }
-  ]
+  word_count: number,
+  separator: string,
+  phrase: string,
+  words: {
+    word: string,
+    word_list_key: number
+  }[]
 }
 
 export type { PhraseObj }
