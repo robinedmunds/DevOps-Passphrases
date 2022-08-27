@@ -3,6 +3,8 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import axios from "axios"
 import Container from '@mui/material/Container'
+import Stack from '@mui/material/Stack'
+import Button from '@mui/material/Button'
 import Phrases from '../components/phrases'
 
 const Home: NextPage = () => {
@@ -36,6 +38,11 @@ const Home: NextPage = () => {
       <Container>
         <h1>Passphrases</h1>
         <h2>Generate strong, memorable and easy-to-type passphrases.</h2>
+
+      <Stack spacing={2} direction="row">
+        <Button onClick={() => {fetchPhrases()}} variant="contained">Generate</Button>
+      </Stack>
+
         {renderPhrases()}
       </Container>
     </>
