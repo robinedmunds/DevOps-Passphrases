@@ -1,22 +1,29 @@
 import { useState } from "react"
 import type { NextPage } from 'next'
 import Head from 'next/head'
+import axios from "axios"
+import useSWR from "swr"
 import Container from '@mui/material/Container'
 import Phrases from '../components/phrases'
 
 const Home: NextPage = () => {
-  const [phrases, setPhrases] = useState([
-    "slot tribe gown grub",
-    "shout lyric ice juicy",
-    "wifi puma cough boast",
-    "clad faced blurt good",
-    "slaw scrub slam pulse",
-    "swirl glove knelt nanny",
-    "aloha vixen flick broke",
-    "year glow swear unify",
-    "bagel steep aging silly",
-    "manor scary creme clip",
-  ])
+  const fetcher = (...args) => {
+        setIsLoading(true)
+        axios.get(...args)
+          .then(res => {
+            setPhrases(res.data.phrases.phrases.map(obj => obj.phrase))
+            setIsLoading(false)
+          })
+  }
+  const {data, error} = useSWR("//docker.local:4444/diceware/?format=json&phrase_count=10&word_count=4&separator= &wordlist=eff_short_wordlist_1.txt", fetcher)
+
+  const [isLoading, setIsLoading] = useState(true)
+  const [phrases, setPhrases] = useState([])
+
+  const renderPhrases = () => {
+    if (isLoading) return <p>Loading...</p>
+    return <Phrases phrases={phrases} />
+  }
 
   return (
     <>
@@ -28,7 +35,7 @@ const Home: NextPage = () => {
       <Container>
         <h1>Passphrases</h1>
         <h2>Generate strong, memorable and easy-to-type passphrases.</h2>
-        <Phrases phrases={phrases} />
+        {renderPhrases()}
       </Container>
     </>
   )
