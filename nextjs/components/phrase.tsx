@@ -1,9 +1,9 @@
 import { useState } from "react"
-import { Box } from '@mui/material'
-import { CopyToClipboard } from 'react-copy-to-clipboard'
-import ContentCopyIcon from '@mui/icons-material/ContentCopy'
+import { Box } from "@mui/material"
+import { CopyToClipboard } from "react-copy-to-clipboard"
+import ContentCopyIcon from "@mui/icons-material/ContentCopy"
 
-const Phrase = ({ phrase }) => {
+const Phrase = (props: { phrase: String }) => {
   const [ copied, setIsCopied ] = useState(false)
 
   return (
@@ -21,7 +21,7 @@ const Phrase = ({ phrase }) => {
           padding: "0 2.2rem"
         }}
       >
-        21 chars
+        {props.phrase.length} chars
       </Box>
       <Box
         sx={{
@@ -29,14 +29,14 @@ const Phrase = ({ phrase }) => {
           padding: "1.6rem 0"
         }}
       >
-        { phrase }
+        { props.phrase }
       </Box>
       <Box
         sx={{
           padding: "0 2.2rem"
         }}
       >
-        <CopyToClipboard text={phrase}
+        <CopyToClipboard text={props.phrase}
           onCopy={() => {
             setIsCopied(true)
             console.log("phrase copied")

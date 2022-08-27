@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react"
-import type { NextPage } from 'next'
-import Head from 'next/head'
+import type { NextPage } from "next"
+import Head from "next/head"
 import axios from "axios"
-import Container from '@mui/material/Container'
-import Stack from '@mui/material/Stack'
-import Button from '@mui/material/Button'
-import Phrases from '../components/phrases'
+import Container from "@mui/material/Container"
+import Stack from "@mui/material/Stack"
+import Button from "@mui/material/Button"
+import type { PhraseObj } from "../interfaces"
+import Phrases from "../components/phrases"
 
 const Home: NextPage = () => {
   const [isLoading, setIsLoading] = useState(true)
@@ -14,7 +15,7 @@ const Home: NextPage = () => {
   const fetchPhrases = () => {
     axios.get("//docker.local:4444/diceware/?format=json&phrase_count=10&word_count=4&separator= &wordlist=eff_short_wordlist_1.txt")
       .then(res => {
-        setPhrases(res.data.phrases.phrases.map(obj => obj.phrase))
+        setPhrases(res.data.phrases.phrases.map((o: PhraseObj) => o.phrase))
         setIsLoading(false)
       })
   }
