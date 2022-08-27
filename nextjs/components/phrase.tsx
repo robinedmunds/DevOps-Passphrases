@@ -1,7 +1,11 @@
+import { useState } from "react"
 import { Box } from '@mui/material'
+import { CopyToClipboard } from 'react-copy-to-clipboard'
 import ContentCopyIcon from '@mui/icons-material/ContentCopy'
 
 const Phrase = ({ phrase }) => {
+  const [ copied, setIsCopied ] = useState(false)
+
   return (
     <Box
       sx={{
@@ -32,7 +36,14 @@ const Phrase = ({ phrase }) => {
           padding: "0 2.2rem"
         }}
       >
-        <ContentCopyIcon />
+        <CopyToClipboard text={phrase}
+          onCopy={() => {
+            setIsCopied(true)
+            console.log("phrase copied")
+          }}
+          >
+          <ContentCopyIcon />
+        </CopyToClipboard>
       </Box>
     </Box>
   )
