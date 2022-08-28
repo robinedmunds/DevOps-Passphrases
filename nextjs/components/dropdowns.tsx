@@ -16,6 +16,9 @@ const Dropdowns = (props: { wordLists: string[], options: OptionsObj, setOptions
     {label: "Hash", value: encodeURIComponent("#")}
   ]
 
+  const NUMBERS: {label: string, value: number}[] = ["One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"]
+    .map((i, idx) => ({label: i, value: idx+1}))
+
   const handleChange = (event: SelectChangeEvent) => {
     if (event.target.name === "select-word-count")
       props.setOptions({...props.options, wordCount: event.target.value})
@@ -27,6 +30,9 @@ const Dropdowns = (props: { wordLists: string[], options: OptionsObj, setOptions
       props.setOptions({...props.options, separator: event.target.value})
   }
 
+  const renderNumberMenuItems = () =>
+    NUMBERS.map(i => <MenuItem key={i.value} value={i.value}>{i.label}</MenuItem>)
+
   return (
     <div>
       <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
@@ -36,12 +42,10 @@ const Dropdowns = (props: { wordLists: string[], options: OptionsObj, setOptions
           name="select-word-count"
           labelId="select-word-count-label"
           label="Word count"
-          value={props.options.wordCount}
+          value={`${props.options.wordCount}`}
           onChange={(event: SelectChangeEvent) => {handleChange(event)}}
         >
-          <MenuItem value={3}>Three</MenuItem>
-          <MenuItem value={5}>Five</MenuItem>
-          <MenuItem value={10}>Ten</MenuItem>
+          {renderNumberMenuItems()}
         </Select>
       </FormControl>
 
@@ -66,7 +70,7 @@ const Dropdowns = (props: { wordLists: string[], options: OptionsObj, setOptions
           name="select-wordlist"
           labelId="select-wordlist-label"
           label="Word list"
-          value={props.options.wordlist}
+          value={`${props.options.wordlist}`}
           onChange={handleChange}
         >
           {["reinhold.txt","eff_short_wordlist_2_0.txt","eff_short_wordlist_1.txt","eff_large_wordlist.txt"].map(i => <MenuItem key={i} value={i}>{i}</MenuItem>)}
@@ -80,12 +84,10 @@ const Dropdowns = (props: { wordLists: string[], options: OptionsObj, setOptions
           name="select-phrase-count"
           labelId="select-phrase-count-label"
           label="Phrase count"
-          value={props.options.phraseCount}
+          value={`${props.options.phraseCount}`}
           onChange={handleChange}
         >
-          <MenuItem value={1}>One</MenuItem>
-          <MenuItem value={5}>Five</MenuItem>
-          <MenuItem value={10}>Ten</MenuItem>
+          {renderNumberMenuItems()}
         </Select>
       </FormControl>
 
