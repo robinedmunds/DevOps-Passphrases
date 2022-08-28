@@ -10,17 +10,28 @@ import Phrases from "../components/phrases"
 import Dropdowns from "../components/dropdowns"
 
 const Home: NextPage = () => {
-  const [isLoading, setIsLoading] = useState(true)
-  const [phrases, setPhrases] = useState([])
   const [options, setOptions] = useState({
     phraseCount: 5,
     wordCount: 3,
     separator: encodeURIComponent(" "),
     wordlist: "eff_short_wordlist_1.txt"
   })
+  const [apiURL, setApiUrl] = useState("//docker.local:4444/diceware/?format=json"
+      + `&phrase_count=${options.phraseCount}`
+      + `&word_count=${options.wordCount}`
+      + `&separator=${options.separator}`
+      + `&wordlist=${options.wordlist}`)
+  const [isLoading, setIsLoading] = useState(true)
+  const [phrases, setPhrases] = useState([])
 
   const fetchPhrases = () => {
-    axios.get(`//docker.local:4444/diceware/?format=json&phrase_count=${options.phraseCount}&word_count=${options.wordCount}&separator=${options.separator}&wordlist=${options.wordlist}`)
+    setApiUrl("//docker.local:4444/diceware/?format=json"
+      + `&phrase_count=${options.phraseCount}`
+      + `&word_count=${options.wordCount}`
+      + `&separator=${options.separator}`
+      + `&wordlist=${options.wordlist}`)
+
+    axios.get(apiURL)
       .then(res => {
         setPhrases(res.data.phrases.phrases.map((o: PhraseObj) => o.phrase))
         setIsLoading(false)
@@ -29,7 +40,7 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     fetchPhrases()
-  }, [options])
+  }, [options, apiURL])
 
   const renderPhrases = () => {
     if (isLoading) return <p>Loading...</p>
@@ -55,6 +66,7 @@ const Home: NextPage = () => {
           <Dropdowns options={options} setOptions={setOptions} />
         </Stack>
           {renderPhrases()}
+          <a href={apiURL}>{apiURL}</a>
       </Container>
     </>
   )
