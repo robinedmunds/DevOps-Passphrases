@@ -7,13 +7,20 @@ import Stack from "@mui/material/Stack"
 import Button from "@mui/material/Button"
 import type { PhraseObj } from "../interfaces"
 import Phrases from "../components/phrases"
+import Dropdowns from "../components/dropdowns"
 
 const Home: NextPage = () => {
   const [isLoading, setIsLoading] = useState(true)
   const [phrases, setPhrases] = useState([])
+  const [options, setOptions] = useState({
+    phraseCount: 5,
+    wordCount: 3,
+    separator: encodeURIComponent(" "),
+    wordlist: "eff_short_wordlist_1.txt"
+  })
 
   const fetchPhrases = () => {
-    axios.get("//docker.local:4444/diceware/?format=json&phrase_count=10&word_count=4&separator= &wordlist=eff_short_wordlist_1.txt")
+    axios.get(`//docker.local:4444/diceware/?format=json&phrase_count=${options.phraseCount}&word_count=${options.wordCount}&separator=${options.separator}&wordlist=${options.wordlist}`)
       .then(res => {
         setPhrases(res.data.phrases.phrases.map((o: PhraseObj) => o.phrase))
         setIsLoading(false)
@@ -22,7 +29,7 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     fetchPhrases()
-  }, [])
+  }, [options])
 
   const renderPhrases = () => {
     if (isLoading) return <p>Loading...</p>
@@ -40,11 +47,14 @@ const Home: NextPage = () => {
         <h1>Passphrases</h1>
         <h2>Generate strong, memorable and easy-to-type passphrases.</h2>
 
-      <Stack spacing={2} direction="row">
-        <Button onClick={() => {fetchPhrases()}} variant="contained">Generate</Button>
-      </Stack>
+        <Stack spacing={2} direction="row">
+          <Button onClick={() => {fetchPhrases()}} variant="contained">Generate</Button>
+        </Stack>
 
-        {renderPhrases()}
+        <Stack spacing={2} direction="row">
+          <Dropdowns options={options} setOptions={setOptions} />
+        </Stack>
+          {renderPhrases()}
       </Container>
     </>
   )
