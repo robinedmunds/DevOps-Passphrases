@@ -2,8 +2,9 @@ import InputLabel from "@mui/material/InputLabel"
 import MenuItem from "@mui/material/MenuItem"
 import FormControl from "@mui/material/FormControl"
 import Select, { SelectChangeEvent } from "@mui/material/Select"
+import type { OptionsObj } from "../interfaces"
 
-const Dropdown = (props) => {
+const Dropdowns = (props: { wordLists: string[], options: OptionsObj, setOptions: ({...OptionsObj}) => void}) => {
   const SEPARATORS: {
     label: string,
     value: string
@@ -15,7 +16,7 @@ const Dropdown = (props) => {
     {label: "Hash", value: encodeURIComponent("#")}
   ]
 
-  const handleChange = (event) => {
+  const handleChange = (event: SelectChangeEvent) => {
     if (event.target.name === "select-word-count")
       props.setOptions({...props.options, wordCount: event.target.value})
     if (event.target.name === "select-phrase-count")
@@ -36,7 +37,7 @@ const Dropdown = (props) => {
           labelId="select-word-count-label"
           label="Word count"
           value={props.options.wordCount}
-          onChange={(event) => {handleChange(event)}}
+          onChange={(event: SelectChangeEvent) => {handleChange(event)}}
         >
           <MenuItem value={3}>Three</MenuItem>
           <MenuItem value={5}>Five</MenuItem>
@@ -52,7 +53,7 @@ const Dropdown = (props) => {
           labelId="select-separator-label"
           label="Separator"
           value={props.options.separator}
-          onChange={(event) => {handleChange(event)}}
+          onChange={handleChange}
         >
           {SEPARATORS.map(i => <MenuItem key={i.label} value={i.value}>{i.label}</MenuItem>)}
         </Select>
@@ -66,7 +67,7 @@ const Dropdown = (props) => {
           labelId="select-wordlist-label"
           label="Word list"
           value={props.options.wordlist}
-          onChange={(event) => {handleChange(event)}}
+          onChange={handleChange}
         >
           {["reinhold.txt","eff_short_wordlist_2_0.txt","eff_short_wordlist_1.txt","eff_large_wordlist.txt"].map(i => <MenuItem key={i} value={i}>{i}</MenuItem>)}
         </Select>
@@ -80,7 +81,7 @@ const Dropdown = (props) => {
           labelId="select-phrase-count-label"
           label="Phrase count"
           value={props.options.phraseCount}
-          onChange={(event) => {handleChange(event)}}
+          onChange={handleChange}
         >
           <MenuItem value={1}>One</MenuItem>
           <MenuItem value={5}>Five</MenuItem>
@@ -92,4 +93,4 @@ const Dropdown = (props) => {
   )
 }
 
-export default Dropdown
+export default Dropdowns

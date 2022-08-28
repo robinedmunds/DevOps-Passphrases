@@ -5,7 +5,7 @@ import axios from "axios"
 import Container from "@mui/material/Container"
 import Stack from "@mui/material/Stack"
 import Button from "@mui/material/Button"
-import type { PhraseObj } from "../interfaces"
+import type { PhraseObj, OptionsObj } from "../interfaces"
 import Phrases from "../components/phrases"
 import Dropdowns from "../components/dropdowns"
 
@@ -23,6 +23,7 @@ const Home: NextPage = () => {
       + `&wordlist=${options.wordlist}`)
   const [isLoading, setIsLoading] = useState(true)
   const [phrases, setPhrases] = useState([])
+  const [wordlists, setWordlists] = useState(null)
 
   const fetchPhrases = () => {
     setApiUrl("//docker.local:4444/diceware/?format=json"
@@ -34,6 +35,7 @@ const Home: NextPage = () => {
     axios.get(apiURL)
       .then(res => {
         setPhrases(res.data.phrases.phrases.map((o: PhraseObj) => o.phrase))
+        setWordlists(res.data.wordlists_available)
         setIsLoading(false)
       })
   }
@@ -63,7 +65,7 @@ const Home: NextPage = () => {
         </Stack>
 
         <Stack spacing={2} direction="row">
-          <Dropdowns options={options} setOptions={setOptions} />
+          <Dropdowns wordLists={wordlists} options={options} setOptions={setOptions} />
         </Stack>
           {renderPhrases()}
           <a href={apiURL}>{apiURL}</a>

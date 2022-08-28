@@ -8,4 +8,11 @@ interface PhraseObj {
   }[]
 }
 
-export type { PhraseObj }
+interface OptionsObj {
+  phraseCount: number,
+  wordCount: number,
+  separator: string,
+  wordlist: string
+}
+
+export type { PhraseObj, OptionsObj }
