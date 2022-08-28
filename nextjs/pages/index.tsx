@@ -23,7 +23,7 @@ const Home: NextPage = () => {
       + `&wordlist=${options.wordlist}`)
   const [isLoading, setIsLoading] = useState(true)
   const [phrases, setPhrases] = useState([])
-  const [wordlists, setWordlists] = useState(null)
+  const [wordlists, setWordlists] = useState([])
 
   const fetchPhrases = () => {
     setApiUrl("//docker.local:4444/diceware/?format=json"
