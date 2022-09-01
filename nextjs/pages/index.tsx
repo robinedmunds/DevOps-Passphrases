@@ -8,6 +8,7 @@ import Button from "@mui/material/Button"
 import type { PhraseObj, OptionsObj } from "../interfaces"
 import Phrases from "../components/phrases"
 import Dropdowns from "../components/dropdowns"
+import Error from "../components/error"
 
 const Home: NextPage = () => {
   const [options, setOptions] = useState({
@@ -22,6 +23,7 @@ const Home: NextPage = () => {
       + `&separator=${options.separator}`
       + `&wordlist=${options.wordlist}`)
   const [isLoading, setIsLoading] = useState(true)
+  const [apiError, setAPIError] = useState(null)
   const [phrases, setPhrases] = useState([])
   const [wordlists, setWordlists] = useState([])
 
@@ -36,6 +38,9 @@ const Home: NextPage = () => {
       .then(res => {
         setPhrases(res.data.phrases.phrases.map((o: PhraseObj) => o.phrase))
         setWordlists(res.data.wordlists_available)
+      }).catch(err => {
+        setAPIError(err)
+      }).then(() => {
         setIsLoading(false)
       })
   }
@@ -46,6 +51,7 @@ const Home: NextPage = () => {
 
   const renderPhrases = () => {
     if (isLoading) return <p>Loading...</p>
+    if (apiError) return <Error error={apiError.message} />
     return <Phrases phrases={phrases} />
   }
 
