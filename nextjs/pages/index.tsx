@@ -5,7 +5,7 @@ import axios from "axios"
 import Container from "@mui/material/Container"
 import Stack from "@mui/material/Stack"
 import Button from "@mui/material/Button"
-import type { PhraseObj, OptionsObj } from "../interfaces"
+import type { PhraseObj } from "../interfaces"
 import Phrases from "../components/phrases"
 import Dropdowns from "../components/dropdowns"
 import Error from "../components/error"
@@ -23,7 +23,7 @@ const Home: NextPage = () => {
       + `&separator=${options.separator}`
       + `&wordlist=${options.wordlist}`)
   const [isLoading, setIsLoading] = useState(true)
-  const [apiError, setAPIError] = useState(null)
+  const [apiError, setApiError] = useState(null)
   const [phrases, setPhrases] = useState([])
   const [wordlists, setWordlists] = useState([])
 
@@ -38,11 +38,9 @@ const Home: NextPage = () => {
       .then(res => {
         setPhrases(res.data.phrases.phrases.map((o: PhraseObj) => o.phrase))
         setWordlists(res.data.wordlists_available)
-      }).catch(err => {
-        setAPIError(err)
-      }).then(() => {
-        setIsLoading(false)
       })
+      .catch(err => { setApiError(err) })
+      .then(() => { setIsLoading(false) })
   }
 
   useEffect(() => {
