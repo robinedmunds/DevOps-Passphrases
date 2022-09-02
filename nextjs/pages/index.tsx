@@ -5,42 +5,46 @@ import axios from "axios"
 import Container from "@mui/material/Container"
 import Stack from "@mui/material/Stack"
 import Button from "@mui/material/Button"
-import type { PhraseObj } from "../interfaces"
+import type { PhraseObj, OptionsObj, ApiResponseObj } from "../interfaces"
 import Phrases from "../components/phrases"
 import Dropdowns from "../components/dropdowns"
 import Error from "../components/error"
 
 const Home: NextPage = () => {
+  const buildApiUrl = (options: OptionsObj) =>
+    "//docker.local:4444/diceware/?format=json" +
+    `&phrase_count=${options.phraseCount}` +
+    `&word_count=${options.wordCount}` +
+    `&separator=${options.separator}` +
+    `&wordlist=${options.wordlist}`
+
   const [options, setOptions] = useState({
     phraseCount: 5,
     wordCount: 3,
     separator: encodeURIComponent(" "),
     wordlist: "eff_short_wordlist_1.txt"
   })
-  const [apiURL, setApiUrl] = useState("//docker.local:4444/diceware/?format=json"
-      + `&phrase_count=${options.phraseCount}`
-      + `&word_count=${options.wordCount}`
-      + `&separator=${options.separator}`
-      + `&wordlist=${options.wordlist}`)
+  const [apiURL, setApiUrl] = useState(buildApiUrl(options))
   const [isLoading, setIsLoading] = useState(true)
   const [apiError, setApiError] = useState(null)
   const [phrases, setPhrases] = useState([])
   const [wordlists, setWordlists] = useState([])
 
   const fetchPhrases = () => {
-    setApiUrl("//docker.local:4444/diceware/?format=json"
-      + `&phrase_count=${options.phraseCount}`
-      + `&word_count=${options.wordCount}`
-      + `&separator=${options.separator}`
-      + `&wordlist=${options.wordlist}`)
+    setApiUrl(buildApiUrl(options))
 
-    axios.get(apiURL)
-      .then(res => {
+    axios
+      .get(apiURL)
+      .then((res) => {
         setPhrases(res.data.phrases.phrases.map((o: PhraseObj) => o.phrase))
         setWordlists(res.data.wordlists_available)
       })
-      .catch(err => { setApiError(err) })
-      .then(() => { setIsLoading(false) })
+      .catch((err) => {
+        setApiError(err)
+      })
+      .then(() => {
+        setIsLoading(false)
+      })
   }
 
   useEffect(() => {
@@ -65,14 +69,24 @@ const Home: NextPage = () => {
         <h2>Generate strong, memorable and easy-to-type passphrases.</h2>
 
         <Stack spacing={2} direction="row">
-          <Button onClick={() => {fetchPhrases()}} variant="contained">Generate</Button>
+          <Button
+            onClick={() => {
+              fetchPhrases()
+            }}
+            variant="contained">
+            Generate
+          </Button>
         </Stack>
 
         <Stack spacing={2} direction="row">
-          <Dropdowns wordLists={wordlists} options={options} setOptions={setOptions} />
+          <Dropdowns
+            wordLists={wordlists}
+            options={options}
+            setOptions={setOptions}
+          />
         </Stack>
-          {renderPhrases()}
-          <a href={apiURL}>{apiURL}</a>
+        {renderPhrases()}
+        <a href={apiURL}>{apiURL}</a>
       </Container>
     </>
   )

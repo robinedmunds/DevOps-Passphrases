@@ -1,18 +1,37 @@
 interface PhraseObj {
-  word_count: number,
-  separator: string,
-  phrase: string,
+  word_count: number
+  separator: string
+  phrase: string
   words: {
-    word: string,
+    word: string
     word_list_key: number
   }[]
 }
 
 interface OptionsObj {
-  phraseCount: number,
-  wordCount: number,
-  separator: string,
+  phraseCount: number
+  wordCount: number
+  separator: string
   wordlist: string
 }
 
-export type { PhraseObj, OptionsObj }
+interface ApiResponseObj {
+  query: {
+    format: string
+    phrase_count: string
+    word_count: string
+    separator: string
+    wordlist: string
+  }
+  wordlists_available: string[]
+  phrases: {
+    word_count: number
+    separator: string
+    phrase_count: number
+    phrases: PhraseObj
+    wordlist: string
+  }
+}
+
+export type { PhraseObj, OptionsObj, ApiResponseObj }
+
