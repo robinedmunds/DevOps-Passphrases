@@ -3,11 +3,9 @@ import type { NextPage } from "next"
 import Head from "next/head"
 import axios from "axios"
 import Container from "@mui/material/Container"
-import Stack from "@mui/material/Stack"
-import Button from "@mui/material/Button"
-import type { PhraseObj, OptionsObj, ApiResponseObj } from "../interfaces"
+import type { PhraseObj, OptionsObj } from "../interfaces"
 import Phrases from "../components/phrases"
-import Dropdowns from "../components/dropdowns"
+import OptionsBar from "../components/options"
 import Error from "../components/error"
 
 const Home: NextPage = () => {
@@ -68,23 +66,13 @@ const Home: NextPage = () => {
         <h1>Passphrases</h1>
         <h2>Generate strong, memorable and easy-to-type passphrases.</h2>
 
-        <Stack spacing={2} direction="row">
-          <Button
-            onClick={() => {
-              fetchPhrases()
-            }}
-            variant="contained">
-            Generate
-          </Button>
-        </Stack>
+        <OptionsBar
+          wordLists={wordlists}
+          options={options}
+          setOptions={setOptions}
+          fetchPhrases={fetchPhrases}
+        />
 
-        <Stack spacing={2} direction="row">
-          <Dropdowns
-            wordLists={wordlists}
-            options={options}
-            setOptions={setOptions}
-          />
-        </Stack>
         {renderPhrases()}
         <a href={apiURL}>{apiURL}</a>
       </Container>
