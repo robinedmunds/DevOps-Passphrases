@@ -47,8 +47,8 @@ const OptionsBar = (props: {
       props.setOptions({ ...props.options, separator: event.target.value })
   }
 
-  const renderNumberMenuItems = () =>
-    NUMBERS.map((i) => (
+  const renderNumberMenuItems = (sliceStart: number, sliceEnd: number) =>
+    NUMBERS.slice(sliceStart, sliceEnd).map((i) => (
       <MenuItem key={i.value} value={i.value}>
         {i.label}
       </MenuItem>
@@ -69,7 +69,7 @@ const OptionsBar = (props: {
           onChange={(event: SelectChangeEvent) => {
             handleChange(event)
           }}>
-          {renderNumberMenuItems()}
+          {renderNumberMenuItems(1, 8)}
         </Select>
       </FormControl>
 
@@ -99,12 +99,7 @@ const OptionsBar = (props: {
           label="Word list"
           value={`${props.options.wordlist}`}
           onChange={handleChange}>
-          {[
-            "reinhold.txt",
-            "eff_short_wordlist_2_0.txt",
-            "eff_short_wordlist_1.txt",
-            "eff_large_wordlist.txt"
-          ].map((i) => (
+          {props.wordLists.map((i) => (
             <MenuItem key={i} value={i}>
               {i}
             </MenuItem>
@@ -121,7 +116,7 @@ const OptionsBar = (props: {
           label="Phrase count"
           value={`${props.options.phraseCount}`}
           onChange={handleChange}>
-          {renderNumberMenuItems()}
+          {renderNumberMenuItems(0, 10)}
         </Select>
       </FormControl>
       <Button
