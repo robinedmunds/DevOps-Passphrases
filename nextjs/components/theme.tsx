@@ -1,4 +1,3 @@
-import { ThemeContext } from "@emotion/react"
 import { createTheme } from "@mui/material/styles"
 
 const theme = createTheme({
@@ -12,7 +11,7 @@ const theme = createTheme({
         main: "#EFF5FB",
         dark: "#DEEBF7"
       },
-      cardDark: "#CFE2F2",
+      cardDark: "#F0F2E3",
       contrast: "#032F57"
     },
     info: {
