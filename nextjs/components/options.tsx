@@ -20,8 +20,10 @@ const OptionsBar = (props: {
   }[] = [
     { label: "Space", value: encodeURIComponent(" ") },
     { label: "Full stop", value: encodeURIComponent(".") },
+    { label: "Comma", value: encodeURIComponent(",") },
     { label: "Hyphen", value: encodeURIComponent("-") },
     { label: "Underscore", value: encodeURIComponent("_") },
+    { label: "Semi colon", value: encodeURIComponent(";") },
     { label: "Hash", value: encodeURIComponent("#") }
   ]
 

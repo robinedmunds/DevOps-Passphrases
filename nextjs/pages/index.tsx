@@ -2,8 +2,6 @@ import { useEffect, useState } from "react"
 import type { NextPage } from "next"
 import Head from "next/head"
 import axios from "axios"
-import Container from "@mui/material/Container"
-// import Typography from "@mui/material/Typography"
 import type { PhraseObj, OptionsObj } from "../interfaces"
 import Hero from "../components/hero"
 import Phrases from "../components/phrases"
@@ -21,7 +19,7 @@ const Home: NextPage = () => {
 
   const [options, setOptions] = useState({
     phraseCount: 5,
-    wordCount: 3,
+    wordCount: 4,
     separator: encodeURIComponent(" "),
     wordlist: "eff_short_wordlist_1.txt"
   })
