@@ -1,9 +1,8 @@
 import { css } from "@emotion/react"
 import Phrase from "./phrase"
 
-const generatePhrases = (phrases: string[]) => (
-  phrases.map(phrase => <Phrase key={phrase} phrase={phrase} />)
-)
+const generatePhrases = (phrases: string[]) =>
+  phrases.map((phrase) => <Phrase key={phrase} phrase={phrase} />)
 
 const Phrases = (props: { phrases: string[] }) => {
   return (
@@ -13,10 +12,9 @@ const Phrases = (props: { phrases: string[] }) => {
         flex-direction: column;
         justify-content: space-between;
         align-items: center;
-    `)}>
-
+    `)}
+    >
       {generatePhrases(props.phrases)}
-
     </div>
   )
 }

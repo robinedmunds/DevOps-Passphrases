@@ -20,13 +20,15 @@ const snackbar = (props: {
       autoHideDuration={3000}
       onClose={() => {
         props.setIsOpen(false)
-      }}>
+      }}
+    >
       <Alert
         onClose={() => {
           props.setIsOpen(false)
         }}
         severity="info"
-        sx={{ width: "100%" }}>
+        sx={{ width: "100%" }}
+      >
         {props.message}
       </Alert>
     </Snackbar>
@@ -34,4 +36,3 @@ const snackbar = (props: {
 }
 
 export default snackbar
-

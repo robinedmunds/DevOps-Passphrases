@@ -57,7 +57,8 @@ const OptionsBar = (props: {
   return (
     <Stack
       direction={{ sm: "column", md: "row" }}
-      spacing={{ xs: 2, sm: 2, md: 4 }}>
+      spacing={{ xs: 2, sm: 2, md: 4 }}
+    >
       <FormControl variant="standard" sx={{ m: 1, minWidth: 160 }}>
         <InputLabel id="select-word-count-label">Word count</InputLabel>
         <Select
@@ -68,7 +69,8 @@ const OptionsBar = (props: {
           value={`${props.options.wordCount}`}
           onChange={(event: SelectChangeEvent) => {
             handleChange(event)
-          }}>
+          }}
+        >
           {renderNumberMenuItems(1, 8)}
         </Select>
       </FormControl>
@@ -81,7 +83,8 @@ const OptionsBar = (props: {
           labelId="select-separator-label"
           label="Separator"
           value={props.options.separator}
-          onChange={handleChange}>
+          onChange={handleChange}
+        >
           {SEPARATORS.map((i) => (
             <MenuItem key={i.label} value={i.value}>
               {i.label}
@@ -98,7 +101,8 @@ const OptionsBar = (props: {
           labelId="select-wordlist-label"
           label="Word list"
           value={`${props.options.wordlist}`}
-          onChange={handleChange}>
+          onChange={handleChange}
+        >
           {props.wordLists.map((i) => (
             <MenuItem key={i} value={i}>
               {i}
@@ -115,7 +119,8 @@ const OptionsBar = (props: {
           labelId="select-phrase-count-label"
           label="Phrase count"
           value={`${props.options.phraseCount}`}
-          onChange={handleChange}>
+          onChange={handleChange}
+        >
           {renderNumberMenuItems(0, 10)}
         </Select>
       </FormControl>
@@ -123,7 +128,8 @@ const OptionsBar = (props: {
         onClick={() => {
           props.fetchPhrases()
         }}
-        variant="contained">
+        variant="contained"
+      >
         <LoopIcon />
       </Button>
     </Stack>
@@ -131,4 +137,3 @@ const OptionsBar = (props: {
 }
 
 export default OptionsBar
-

@@ -34,4 +34,3 @@ interface ApiResponseObj {
 }
 
 export type { PhraseObj, OptionsObj, ApiResponseObj }
-

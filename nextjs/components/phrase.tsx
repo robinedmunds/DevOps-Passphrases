@@ -21,24 +21,28 @@ const Phrase = (props: { phrase: string }) => {
           "&:hover": {
             backgroundColor: "#ddd"
           }
-        }}>
+        }}
+      >
         <Box
           sx={{
             padding: "0 2.2rem"
-          }}>
+          }}
+        >
           {props.phrase.length} chars
         </Box>
         <Box
           sx={{
             fontSize: "2.0rem",
             padding: "1.6rem 0"
-          }}>
+          }}
+        >
           {props.phrase}
         </Box>
         <Box
           sx={{
             padding: "0 2.2rem"
-          }}>
+          }}
+        >
           <CopyToClipboard
             sx={{
               cursor: "pointer",
@@ -49,7 +53,8 @@ const Phrase = (props: { phrase: string }) => {
             text={props.phrase}
             onCopy={() => {
               setIsCopied(true)
-            }}>
+            }}
+          >
             <ContentCopyIcon />
           </CopyToClipboard>
         </Box>
@@ -64,4 +69,3 @@ const Phrase = (props: { phrase: string }) => {
 }
 
 export default Phrase
-

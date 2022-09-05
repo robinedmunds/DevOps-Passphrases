@@ -1,7 +1,7 @@
-import type { AppProps } from 'next/app'
+import type { AppProps } from "next/app"
 import Head from "next/head"
-import CssBaseline from '@mui/material/CssBaseline'
-import Layout from '../components/layout'
+import CssBaseline from "@mui/material/CssBaseline"
+import Layout from "../components/layout"
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
