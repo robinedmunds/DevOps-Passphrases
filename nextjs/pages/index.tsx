@@ -7,6 +7,7 @@ import type { PhraseObj, OptionsObj } from "../interfaces"
 import Phrases from "../components/phrases"
 import OptionsBar from "../components/options"
 import Error from "../components/error"
+import ApiUrl from "../components/apiurl"
 
 const Home: NextPage = () => {
   const buildApiUrl = (options: OptionsObj) =>
@@ -63,18 +64,15 @@ const Home: NextPage = () => {
       </Head>
 
       <Container>
-        <h1>Passphrases</h1>
         <h2>Generate strong, memorable and easy-to-type passphrases.</h2>
-
         <OptionsBar
           wordLists={wordlists}
           options={options}
           setOptions={setOptions}
           fetchPhrases={fetchPhrases}
         />
-
         {renderPhrases()}
-        <a href={apiURL}>{apiURL}</a>
+        <ApiUrl url={apiURL} />
       </Container>
     </>
   )
