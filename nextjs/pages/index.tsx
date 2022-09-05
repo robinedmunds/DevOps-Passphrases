@@ -3,8 +3,9 @@ import type { NextPage } from "next"
 import Head from "next/head"
 import axios from "axios"
 import Container from "@mui/material/Container"
-import Typography from "@mui/material/Typography"
+// import Typography from "@mui/material/Typography"
 import type { PhraseObj, OptionsObj } from "../interfaces"
+import Hero from "../components/hero"
 import Phrases from "../components/phrases"
 import OptionsBar from "../components/options"
 import Error from "../components/error"
@@ -67,19 +68,15 @@ const Home: NextPage = () => {
         />
       </Head>
 
-      <Container>
-        <Typography variant="h2" m={"6.0rem"} align="center">
-          Generate strong, memorable and easy-to-type passphrases.
-        </Typography>
-        <OptionsBar
-          wordLists={wordlists}
-          options={options}
-          setOptions={setOptions}
-          fetchPhrases={fetchPhrases}
-        />
-        {renderPhrases()}
-        <ApiUrl url={apiURL} />
-      </Container>
+      <Hero />
+      <OptionsBar
+        wordLists={wordlists}
+        options={options}
+        setOptions={setOptions}
+        fetchPhrases={fetchPhrases}
+      />
+      {renderPhrases()}
+      <ApiUrl url={apiURL} />
     </>
   )
 }

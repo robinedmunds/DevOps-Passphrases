@@ -14,7 +14,7 @@ const ApiUrl = (props: { url: string }) => {
         mb: "6.0rem"
       }}
     >
-      <h3>API URL</h3>
+      <h3>JSON API URL</h3>
       <Link href={props.url} target="_blank">
         {props.url}
       </Link>
