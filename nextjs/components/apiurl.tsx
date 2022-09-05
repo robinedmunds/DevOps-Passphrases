@@ -8,7 +8,10 @@ const ApiUrl = (props: { url: string }) => {
         typography: "body1",
         "& > :not(style) + :not(style)": {
           ml: 0
-        }
+        },
+        textAlign: "center",
+        mt: "6.0rem",
+        mb: "6.0rem"
       }}
     >
       <h3>API URL</h3>

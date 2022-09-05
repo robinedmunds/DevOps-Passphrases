@@ -1,3 +1,4 @@
+import Container from "@mui/material/Container"
 import Stack from "@mui/material/Stack"
 import InputLabel from "@mui/material/InputLabel"
 import MenuItem from "@mui/material/MenuItem"
@@ -55,84 +56,94 @@ const OptionsBar = (props: {
     ))
 
   return (
-    <Stack
-      direction={{ sm: "column", md: "row" }}
-      spacing={{ xs: 2, sm: 2, md: 4 }}
-    >
-      <FormControl variant="standard" sx={{ m: 1, minWidth: 160 }}>
-        <InputLabel id="select-word-count-label">Word count</InputLabel>
-        <Select
-          id="select-word-count"
-          name="select-word-count"
-          labelId="select-word-count-label"
-          label="Word count"
-          value={`${props.options.wordCount}`}
-          onChange={(event: SelectChangeEvent) => {
-            handleChange(event)
-          }}
-        >
-          {renderNumberMenuItems(1, 8)}
-        </Select>
-      </FormControl>
-
-      <FormControl variant="standard" sx={{ m: 1, minWidth: 160 }}>
-        <InputLabel id="select-separator-label">Separator</InputLabel>
-        <Select
-          id="select-separator"
-          name="select-separator"
-          labelId="select-separator-label"
-          label="Separator"
-          value={props.options.separator}
-          onChange={handleChange}
-        >
-          {SEPARATORS.map((i) => (
-            <MenuItem key={i.label} value={i.value}>
-              {i.label}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-
-      <FormControl variant="standard" sx={{ m: 1, minWidth: 160 }}>
-        <InputLabel id="select-wordlist-label">Word list</InputLabel>
-        <Select
-          id="select-wordlist"
-          name="select-wordlist"
-          labelId="select-wordlist-label"
-          label="Word list"
-          value={`${props.options.wordlist}`}
-          onChange={handleChange}
-        >
-          {props.wordLists.map((i) => (
-            <MenuItem key={i} value={i}>
-              {i}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-
-      <FormControl variant="standard" sx={{ m: 1, minWidth: 160 }}>
-        <InputLabel id="select-phrase-count-label">Phrase count</InputLabel>
-        <Select
-          id="select-phrase-count"
-          name="select-phrase-count"
-          labelId="select-phrase-count-label"
-          label="Phrase count"
-          value={`${props.options.phraseCount}`}
-          onChange={handleChange}
-        >
-          {renderNumberMenuItems(0, 10)}
-        </Select>
-      </FormControl>
-      <Button
-        onClick={() => {
-          props.fetchPhrases()
+    <Container>
+      <Stack
+        sx={{
+          display: "flex",
+          justifyContent: "space-around",
+          backgroundColor: "lightblue",
+          p: "2.0rem",
+          mb: "4.0rem",
+          borderRadius: "10px"
         }}
-        variant="contained"
+        direction={{ sm: "column", md: "row" }}
+        spacing={{ xs: "3.0rem", lg: "6.0rem" }}
       >
-        <LoopIcon />
-      </Button>
-    </Stack>
+        <FormControl variant="standard" sx={{ minWidth: 120 }}>
+          <InputLabel id="select-wordlist-label">Word list</InputLabel>
+          <Select
+            id="select-wordlist"
+            name="select-wordlist"
+            labelId="select-wordlist-label"
+            label="Word list"
+            value={`${props.options.wordlist}`}
+            onChange={handleChange}
+          >
+            {props.wordLists.map((i) => (
+              <MenuItem key={i} value={i}>
+                {i}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
+        <FormControl variant="standard" sx={{ minWidth: 120 }}>
+          <InputLabel id="select-word-count-label">Word count</InputLabel>
+          <Select
+            id="select-word-count"
+            name="select-word-count"
+            labelId="select-word-count-label"
+            label="Word count"
+            value={`${props.options.wordCount}`}
+            onChange={(event: SelectChangeEvent) => {
+              handleChange(event)
+            }}
+          >
+            {renderNumberMenuItems(1, 8)}
+          </Select>
+        </FormControl>
+
+        <FormControl variant="standard" sx={{ minWidth: 120 }}>
+          <InputLabel id="select-separator-label">Separator</InputLabel>
+          <Select
+            id="select-separator"
+            name="select-separator"
+            labelId="select-separator-label"
+            label="Separator"
+            value={props.options.separator}
+            onChange={handleChange}
+          >
+            {SEPARATORS.map((i) => (
+              <MenuItem key={i.label} value={i.value}>
+                {i.label}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
+        <FormControl variant="standard" sx={{ minWidth: 120 }}>
+          <InputLabel id="select-phrase-count-label">Phrase count</InputLabel>
+          <Select
+            id="select-phrase-count"
+            name="select-phrase-count"
+            labelId="select-phrase-count-label"
+            label="Phrase count"
+            value={`${props.options.phraseCount}`}
+            onChange={handleChange}
+          >
+            {renderNumberMenuItems(0, 10)}
+          </Select>
+        </FormControl>
+        <Button
+          onClick={() => {
+            props.fetchPhrases()
+          }}
+          variant="contained"
+        >
+          <LoopIcon />
+        </Button>
+      </Stack>
+    </Container>
   )
 }
 
