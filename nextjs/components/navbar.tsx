@@ -1,30 +1,34 @@
+import NextLink from "next/link"
 import AppBar from "@mui/material/AppBar"
 import Box from "@mui/material/Box"
 import Toolbar from "@mui/material/Toolbar"
 import Typography from "@mui/material/Typography"
 import Button from "@mui/material/Button"
-import IconButton from "@mui/material/IconButton"
-import MenuIcon from "@mui/icons-material/Menu"
 
 const Navbar = () => {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
+          <NextLink href={"/"}>
+            <Typography
+              variant="h6"
+              component="div"
+              sx={{ flexGrow: 1, cursor: "pointer" }}
+            >
+              Passphrase generator
+            </Typography>
+          </NextLink>
+          <NextLink href={"/about"}>
+            <Button color="inherit">About</Button>
+          </NextLink>
+          <Button
             color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
+            href="https://github.com/robinedmunds/DevOps-Passphrases"
+            target="_blank"
           >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Passphrases
-          </Typography>
-          <Button color="inherit">About</Button>
-          <Button color="inherit">GitHub</Button>
+            GitHub
+          </Button>
         </Toolbar>
       </AppBar>
     </Box>
