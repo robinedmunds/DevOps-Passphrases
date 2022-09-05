@@ -3,6 +3,7 @@ import { Box } from "@mui/material"
 import { CopyToClipboard } from "react-copy-to-clipboard"
 import ContentCopyIcon from "@mui/icons-material/ContentCopy"
 import Snackbar from "./snackbar"
+import theme from "./theme"
 
 const Phrase = (props: { phrase: string }) => {
   const [copied, setIsCopied] = useState(false)
@@ -14,18 +15,19 @@ const Phrase = (props: { phrase: string }) => {
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          margin: "2.0rem 0 2.0rem",
-          backgroundColor: "#eee",
+          margin: "2.0rem 0",
+          backgroundColor: theme.palette.custom.cardLight.main,
           textAlign: "center",
           borderRadius: "10px",
           "&:hover": {
-            backgroundColor: "#ddd"
+            backgroundColor: theme.palette.custom.cardLight.dark
           }
         }}
       >
         <Box
           sx={{
-            padding: "0 2.2rem"
+            padding: "0 2.2rem",
+            color: theme.palette.secondary.main
           }}
         >
           {props.phrase.length} chars
@@ -33,6 +35,8 @@ const Phrase = (props: { phrase: string }) => {
         <Box
           sx={{
             fontSize: "2.0rem",
+            fontWeight: 500,
+            color: theme.palette.primary.main,
             padding: "1.6rem 0"
           }}
         >
@@ -40,14 +44,15 @@ const Phrase = (props: { phrase: string }) => {
         </Box>
         <Box
           sx={{
-            padding: "0 2.2rem"
+            padding: "0 2.2rem",
+            color: theme.palette.secondary.main
           }}
         >
           <CopyToClipboard
             sx={{
               cursor: "pointer",
               "&:hover": {
-                color: "red"
+                color: theme.palette.secondary.light
               }
             }}
             text={props.phrase}

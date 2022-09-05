@@ -7,6 +7,7 @@ import Button from "@mui/material/Button"
 import LoopIcon from "@mui/icons-material/Loop"
 import Select, { SelectChangeEvent } from "@mui/material/Select"
 import type { OptionsObj } from "../interfaces"
+import theme from "./theme"
 
 const OptionsBar = (props: {
   wordLists: string[]
@@ -61,9 +62,9 @@ const OptionsBar = (props: {
         sx={{
           display: "flex",
           justifyContent: "space-around",
-          backgroundColor: "lightblue",
+          backgroundColor: theme.palette.custom.cardDark,
           p: "2.0rem",
-          mb: "4.0rem",
+          my: "6.0rem",
           borderRadius: "10px"
         }}
         direction={{ sm: "column", md: "row" }}
