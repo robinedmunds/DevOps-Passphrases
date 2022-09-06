@@ -12,7 +12,7 @@ const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
 const snackbar = (props: {
   message: string
   isOpen: boolean
-  setIsOpen: (flag: boolean) => {}
+  setIsOpen: any
 }) => {
   return (
     <Snackbar

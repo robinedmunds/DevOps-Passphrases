@@ -1,12 +1,12 @@
 import { ThemeProvider } from "@mui/material/styles"
 import Typography from "@mui/material/Typography"
-import theme from "./theme"
+import { theme } from "../theme"
 
 const Hero = () => {
   theme.typography.h1 = {
     fontSize: "3.0rem",
     margin: "6.0rem 0",
-    color: theme.palette.custom.contrast,
+    color: theme.palette.contrast.main,
     [theme.breakpoints.down("md")]: {
       fontSize: "2.4rem"
     }

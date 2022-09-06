@@ -7,12 +7,13 @@ import Button from "@mui/material/Button"
 import LoopIcon from "@mui/icons-material/Loop"
 import Select, { SelectChangeEvent } from "@mui/material/Select"
 import type { OptionsObj } from "../interfaces"
-import theme from "./theme"
+import { theme } from "../theme"
 
 const OptionsBar = (props: {
   wordLists: string[]
   options: OptionsObj
-  setOptions: ({ ...OptionsObj }) => void
+  setOptions: any
+  fetchPhrases: any
 }) => {
   const SEPARATORS: {
     label: string
@@ -64,7 +65,7 @@ const OptionsBar = (props: {
         sx={{
           display: "flex",
           justifyContent: "space-around",
-          backgroundColor: theme.palette.custom.cardDark,
+          backgroundColor: theme.palette.cardDark.main,
           p: "2.0rem",
           my: "6.0rem",
           borderRadius: "10px"

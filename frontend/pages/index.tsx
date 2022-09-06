@@ -54,7 +54,7 @@ const Home: NextPage = () => {
 
   const renderPhrases = () => {
     if (isLoading) return <p>Loading...</p>
-    if (apiError) return <Error error={apiError.message} />
+    if (apiError) return <Error error={apiError["message"]} />
     return <Phrases phrases={phrases} />
   }
 
