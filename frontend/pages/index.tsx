@@ -8,10 +8,12 @@ import Phrases from "../components/phrases"
 import OptionsBar from "../components/options"
 import Error from "../components/error"
 import ApiUrl from "../components/apiurl"
+import { getApiBaseUrl } from "../config"
 
 const Home: NextPage = () => {
   const buildApiUrl = (options: OptionsObj) =>
-    "//docker.local:4444/diceware/?format=json" +
+    `${getApiBaseUrl()}` +
+    "?format=json" +
     `&phrase_count=${options.phraseCount}` +
     `&word_count=${options.wordCount}` +
     `&separator=${options.separator}` +
