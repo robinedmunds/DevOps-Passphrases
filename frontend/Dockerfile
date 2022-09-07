@@ -10,4 +10,4 @@ CMD ["yarn", "build"]
 FROM nginx:alpine
 EXPOSE 80
 WORKDIR /usr/share/nginx/html
-COPY --from=0 /app/out .
+COPY --from=0 /app/out/ .
