@@ -10,7 +10,7 @@ services:
   api:
     build:
       dockerfile: Dockerfile.gunicorn
-      context: ./flask
+      context: ./backend
     environment:
       PORT: 8000
 

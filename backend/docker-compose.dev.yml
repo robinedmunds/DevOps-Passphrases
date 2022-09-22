@@ -1,12 +1,10 @@
-version: "3.8"
+version: "3.9"
 services:
-  app:
+  api_dev:
     build:
       dockerfile: Dockerfile.dev
       context: .
     environment:
-      PORT: 8844
+      PORT: 8000
     ports:
-      - 4000:8844
-    volumes:
-      - .:/app
+      - 8000:8000
