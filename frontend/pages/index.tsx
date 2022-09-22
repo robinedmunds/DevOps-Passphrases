@@ -13,8 +13,7 @@ import { getApiBaseUrl } from "../config"
 const Home: NextPage = () => {
   const buildApiUrl = (options: OptionsObj) =>
     `${getApiBaseUrl()}` +
-    "?format=json" +
-    `&phrase_count=${options.phraseCount}` +
+    `?phrase_count=${options.phraseCount}` +
     `&word_count=${options.wordCount}` +
     `&separator=${options.separator}` +
     `&wordlist=${options.wordlist}`

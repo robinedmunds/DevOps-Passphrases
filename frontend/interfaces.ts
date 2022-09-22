@@ -17,7 +17,6 @@ interface OptionsObj {
 
 interface ApiResponseObj {
   query: {
-    format: string
     phrase_count: string
     word_count: string
     separator: string

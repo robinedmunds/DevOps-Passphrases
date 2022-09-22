@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, make_response
 from business.diceware.classes.phrases import Phrases
 from business.diceware.parse_wordlist import from_file as parse_wordlist_from_file
 from helpers import get_wordlists
@@ -43,8 +43,10 @@ def api():
     phrases = Phrases(**kwargs).as_dict()
     phrases["wordlist"] = wordlist_name
 
-    return {
+    response = make_response({
         "query": q,
         "wordlists_available": wordlist_files,
         "phrases": phrases
-    }
+    })
+    response.headers["Access-Control-Allow-Origin"] = "*"
+    return response
