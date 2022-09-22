@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 SECRET_KEY = 'hb9-(@!ca3p=4p18%m#q=rx13xubdl6v4ix-651@rb!-=$^-(='
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv("DEBUG") or False
 
 ALLOWED_HOSTS = ["*"]
 
@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-	'corsheaders',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -127,5 +127,5 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 # django-cors-headers settings
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_METHODS = [
-	'GET'
+    'GET'
 ]
