@@ -1,3 +1,4 @@
+from http import HTTPStatus
 from flask import Flask, request, make_response
 from business.diceware.classes.phrases import Phrases
 from business.diceware.parse_wordlist import from_file as parse_wordlist_from_file
@@ -36,7 +37,12 @@ def api():
                 raise Exception
             wordlist_name = q["wordlist"]
     except Exception:
-        return """Bad request. Check your query paramaters. Valid query paramaters are: wordlist=(wordlist name), phrase_count=(integer), word_count=(integer), separator=(character)."""
+        return make_response(
+            """Bad request. Check your query paramaters. Valid query paramaters
+            are: wordlist=(wordlist name), phrase_count=(integer),
+            word_count=(integer), separator=(character).""",
+            HTTPStatus.BAD_REQUEST
+        )
 
     kwargs["wordlist"] = parse_wordlist_from_file(
         WORDLIST_DIR + wordlist_name)
@@ -47,6 +53,6 @@ def api():
         "query": q,
         "wordlists_available": wordlist_files,
         "phrases": phrases
-    })
+    }, HTTPStatus.OK)
     response.headers["Access-Control-Allow-Origin"] = "*"
     return response
