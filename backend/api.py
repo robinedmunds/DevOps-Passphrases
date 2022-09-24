@@ -1,4 +1,5 @@
 from http import HTTPStatus
+from telnetlib import WONT
 from flask import Flask, request, make_response
 from cerberus import Validator
 from business.diceware.classes.phrases import Phrases
@@ -10,7 +11,8 @@ app = Flask(__name__)
 WORDLIST_DIR = "business/wordlists/"
 WORDLIST_FILES = get_wordlists(WORDLIST_DIR)
 QUERY_SCHEMA = {
-    "wordlist": {"type": "string", "default": "eff_short_wordlist_1.txt"},
+    "wordlist": {"type": "string", "default": "eff_short_wordlist_1.txt",
+                 "allowed": WORDLIST_FILES},
     "word_count": {
         "type": "integer", "min": 1, "max": 30, "coerce": int, "default": 4},
     "separator": {
