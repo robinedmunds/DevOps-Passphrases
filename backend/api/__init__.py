@@ -1,13 +1,11 @@
 from http import HTTPStatus
-from telnetlib import WONT
-from flask import Flask, request, make_response
+from flask import Blueprint, request, make_response
 from cerberus import Validator
-from backend import create_app
 from business.diceware.classes.phrases import Phrases
 from business.diceware.parse_wordlist import from_file as parse_wordlist_file
 from helpers import get_wordlists
 
-app = create_app()
+bp = Blueprint("api", __name__, url_prefix="")
 
 WORDLIST_DIR = "business/wordlists/"
 WORDLIST_FILES = get_wordlists(WORDLIST_DIR)
@@ -23,7 +21,7 @@ QUERY_SCHEMA = {
 }
 
 
-@app.route("/", methods=["GET"])
+@bp.route("/", methods=["GET"])
 def api():
     query = dict(request.args)
     validator = Validator()

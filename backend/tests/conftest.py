@@ -1,26 +1,24 @@
 import pytest
-from backend.api import app
+from backend import create_app
 
 
-@pytest.fixture()
+@pytest.fixture
 def app():
-    app = create_app()
-    app.config.update({
+    app = create_app({
         "TESTING": True,
     })
 
-    # other setup can go here
+    with app.app_context():
+        pass
 
     yield app
 
-    # clean up / reset resources here
 
-
-@pytest.fixture()
+@pytest.fixture
 def client(app):
     return app.test_client()
 
 
-@pytest.fixture()
+@pytest.fixture
 def runner(app):
     return app.test_cli_runner()
