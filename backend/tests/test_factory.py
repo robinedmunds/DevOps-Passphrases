@@ -1,6 +1,5 @@
 from http import HTTPStatus
 from backend import create_app
-import pytest
 
 
 def test_config():
