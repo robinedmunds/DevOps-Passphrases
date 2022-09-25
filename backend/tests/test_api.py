@@ -3,6 +3,12 @@ from random import choice
 from backend.api import WORDLIST_FILES as WORDLIST_FILE_NAMES
 from ..validator import is_validated_api_json_response
 
+DEFAULT_QUERY = {
+    "phrase_count": 1,
+    "word_count": 1,
+    "separator": ",",
+    "wordlist": choice(WORDLIST_FILE_NAMES)
+}
 
 # headers
 
@@ -202,3 +208,29 @@ def test_response_query_matches_request_query_wordlist(client):
     wordlist = choice(WORDLIST_FILE_NAMES)
     response = client.get("/", query_string={"wordlist": wordlist})
     assert response.json["query"]["wordlist"] == wordlist
+
+
+def test_response_phrase_count_matches_request(client):
+    response = client.get("/", query_string={"phrase_count": 9})
+    assert response.json["phrases"]["phrase_count"] == 9
+
+
+def test_response_phrases_length_matches_request(client):
+    query = DEFAULT_QUERY.copy()
+    query["phrase_count"] = 3
+    response = client.get("/", query_string=query)
+    assert len(response.json["phrases"]["phrases"]) == 3
+
+
+def test_response_word_count_matches_request(client):
+    query = DEFAULT_QUERY.copy()
+    query["word_count"] = 7
+    response = client.get("/", query_string=query)
+    assert response.json["phrases"]["phrases"][0]["word_count"] == 7
+
+
+def test_response_words_length_matches_request(client):
+    query = DEFAULT_QUERY.copy()
+    query["word_count"] = 7
+    response = client.get("/", query_string=query)
+    assert len(response.json["phrases"]["phrases"][0]["words"]) == 7
