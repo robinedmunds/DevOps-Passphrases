@@ -11,4 +11,4 @@ RUN pip install gunicorn
 COPY . .
 RUN git clone https://github.com/robinedmunds/Command-line-Passphrase-Generator.git business
 
-CMD cd /app && gunicorn --workers=$WORKERS --bind=0.0.0.0:$PORT ".:app"
+CMD cd /app && gunicorn --workers=$WORKERS --bind=0.0.0.0:$PORT "app"
