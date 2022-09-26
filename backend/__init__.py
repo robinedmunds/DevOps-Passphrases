@@ -18,3 +18,6 @@ def create_app(test_config=None, instance_relative_config=True):
 
     app.register_blueprint(api.bp)
     return app
+
+
+app = create_app()
