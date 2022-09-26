@@ -3,12 +3,12 @@ FROM python:3-alpine
 ENV PORT 80
 ENV WORKERS 4
 
-WORKDIR /app
-RUN apk add git
+WORKDIR /usr/src/app
 COPY requirements.txt .
-RUN pip install -r requirements.txt
-RUN pip install gunicorn
+RUN pip install --no-cache-dir -r requirements.txt
+RUN apk add git
+RUN pip install --no-cache-dir gunicorn
 COPY . .
 RUN git clone https://github.com/robinedmunds/Command-line-Passphrase-Generator.git business
 
-CMD cd /app && gunicorn --workers=$WORKERS --bind=0.0.0.0:$PORT "__init__:app"
+CMD cd /usr/src/app && gunicorn --workers=$WORKERS --bind=0.0.0.0:$PORT "__init__:app"
