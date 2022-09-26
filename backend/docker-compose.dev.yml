@@ -6,5 +6,6 @@ services:
       context: .
     environment:
       PORT: 8000
+      PYTHONPATH: "/usr/src/app"
     ports:
       - 8000:8000
