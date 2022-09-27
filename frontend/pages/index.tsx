@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useLayoutEffect, useRef } from "react"
 import type { NextPage } from "next"
 import Head from "next/head"
 import axios from "axios"
+import type { AxiosError } from "axios"
 import type { PhraseObj, OptionsObj } from "../interfaces"
 import Hero from "../components/hero"
 import Phrases from "../components/phrases"
@@ -24,22 +25,23 @@ const Home: NextPage = () => {
     separator: encodeURIComponent(" "),
     wordlist: "eff_short_wordlist_1.txt"
   })
-  const [apiURL, setApiUrl] = useState(buildApiUrl(options))
+  const apiURL = useRef(buildApiUrl(options))
   const [isLoading, setIsLoading] = useState(true)
   const [apiError, setApiError] = useState(null)
   const [phrases, setPhrases] = useState([])
   const [wordlists, setWordlists] = useState([])
 
   const fetchPhrases = () => {
-    setApiUrl(buildApiUrl(options))
+    apiURL.current = buildApiUrl(options)
+    setIsLoading(true)
 
     axios
-      .get(apiURL)
+      .get(apiURL.current)
       .then((res) => {
         setPhrases(res.data.phrases.phrases.map((o: PhraseObj) => o.phrase))
         setWordlists(res.data.wordlists_available)
       })
-      .catch((err) => {
+      .catch((err: AxiosError) => {
         setApiError(err)
       })
       .then(() => {
@@ -49,7 +51,12 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     fetchPhrases()
-  }, [options, apiURL])
+  }, [
+    options.phraseCount,
+    options.separator,
+    options.wordCount,
+    options.wordlist
+  ])
 
   const renderPhrases = () => {
     if (isLoading) return <p>Loading...</p>
@@ -75,7 +82,7 @@ const Home: NextPage = () => {
         fetchPhrases={fetchPhrases}
       />
       {renderPhrases()}
-      <ApiUrl url={apiURL} />
+      <ApiUrl url={apiURL.current} />
     </>
   )
 }
