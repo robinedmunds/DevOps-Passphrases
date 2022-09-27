@@ -2,7 +2,6 @@ import { useEffect, useState, useRef } from "react"
 import type { NextPage } from "next"
 import Head from "next/head"
 import axios from "axios"
-import type { AxiosError } from "axios"
 import type { PhraseObj, OptionsObj } from "../interfaces"
 import Hero from "../components/hero"
 import Phrases from "../components/phrases"
@@ -42,7 +41,7 @@ const Home: NextPage = () => {
         setPhrases(res.data.phrases.phrases.map((o: PhraseObj) => o.phrase))
         setWordlists(res.data.wordlists_available)
       })
-      .catch((err: AxiosError) => {
+      .catch((err) => {
         setApiError(err)
       })
       .then(() => {
