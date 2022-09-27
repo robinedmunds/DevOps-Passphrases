@@ -34,10 +34,12 @@ const Phrase = (props: { phrase: string }) => {
         </Box>
         <Box
           sx={{
-            fontSize: "2.0rem",
+            fontSize: "1.6rem",
             fontWeight: 500,
             color: theme.palette.primary.main,
-            padding: "1.6rem 0"
+            padding: "1.6rem 0",
+            wordWrap: "break-word",
+            minWidth: "40%"
           }}
         >
           {props.phrase}
