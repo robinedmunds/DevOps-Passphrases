@@ -1,4 +1,4 @@
-import { useEffect, useState, useLayoutEffect, useRef } from "react"
+import { useEffect, useState, useRef } from "react"
 import type { NextPage } from "next"
 import Head from "next/head"
 import axios from "axios"
@@ -32,8 +32,9 @@ const Home: NextPage = () => {
   const [wordlists, setWordlists] = useState([])
 
   const fetchPhrases = () => {
-    apiURL.current = buildApiUrl(options)
+    setApiError(null)
     setIsLoading(true)
+    apiURL.current = buildApiUrl(options)
 
     axios
       .get(apiURL.current)
@@ -59,7 +60,15 @@ const Home: NextPage = () => {
   ])
 
   const renderPhrases = () => {
-    if (isLoading) return <p>Loading...</p>
+    const tempPhrases = () => {
+      const phrases = []
+      for (let i = 0; i < options.phraseCount; i++) {
+        phrases.push("loading")
+      }
+      return phrases
+    }
+
+    if (isLoading) return <Phrases phrases={tempPhrases()} />
     if (apiError) return <Error error={apiError["message"]} />
     return <Phrases phrases={phrases} />
   }
