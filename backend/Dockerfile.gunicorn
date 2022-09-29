@@ -1,8 +1,5 @@
 FROM python:3-alpine
 
-ENV PORT 80
-ENV WORKERS 4
-
 WORKDIR /usr/src/app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
@@ -11,4 +8,7 @@ RUN pip install --no-cache-dir gunicorn
 COPY . .
 RUN git clone https://github.com/robinedmunds/Command-line-Passphrase-Generator.git business
 
+ENV PYTHONPATH "/usr/src/app"
+ENV WORKERS 4
+ENV PORT 80
 CMD cd /usr/src/app && gunicorn --workers=$WORKERS --bind=0.0.0.0:$PORT "__init__:app"

@@ -1,7 +1,5 @@
 FROM python:3-alpine
 
-ENV PORT 8000
-
 WORKDIR /usr/src/app
 RUN apk add git
 COPY requirements.txt .
@@ -9,4 +7,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 RUN git clone https://github.com/robinedmunds/Command-line-Passphrase-Generator.git business
 
+ENV PORT 8000
+ENV PYTHONPATH "/usr/src/app"
 CMD cd /usr/src/app && flask --app ".:app" --debug run --host=0.0.0.0 --port=$PORT
