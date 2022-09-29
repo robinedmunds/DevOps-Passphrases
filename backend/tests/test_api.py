@@ -1,6 +1,6 @@
 from http import HTTPStatus
 from random import choice
-from backend.api import WORDLIST_FILES as WORDLIST_FILE_NAMES
+from ..api import WORDLIST_FILES as WORDLIST_FILE_NAMES
 from ..validator import is_validated_api_json_response
 
 DEFAULT_QUERY = {
