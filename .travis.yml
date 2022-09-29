@@ -1,0 +1,25 @@
+language: ruby
+
+services:
+  - docker
+
+# test build
+before_install:
+  - docker build -t roblobob/devops-passphrases-proxy-test ./proxy/Dockerfile
+  - docker build -t roblobob/devops-passphrases-api-test ./backend/Dockerfile.dev
+  - docker run -d roblobob/devops-passphrases-api-test
+  - docker ps -a
+
+# run tests
+before_script:
+    - docker run -d roblobob/devops-passphrases-proxy-test /bin/sh -c "/usr/bin/nginx -v -t -V -c /etc/nginx/conf.d/default.conf;"
+  - docker run -d roblobob/devops-passphrases-api-test /bin/sh -c "cd /usr/src/app && python -m pytest;"
+
+# production build
+script:
+  - docker build -t roblobob/devops-passphrases-proxy ./proxy/Dockerfile
+  - docker build -t roblobob/devops-passphrases-api ./backend/Dockerfile.gunicorn
+  - docker build -t roblobob/devops-passphrases-frontend ./frontend/Dockerfile
+
+# push to docker hub
+after_script:
