@@ -5,8 +5,8 @@ services:
 
 # test build
 before_install:
-  - docker build -t proxy-testing ./proxy/Dockerfile
-  - docker build -t api-testing ./backend/Dockerfile.dev
+  - docker build -t proxy-testing ./proxy
+  - docker build -t api-testing ./backend -f Dockerfile.dev
   - docker run -d api-testing
   - docker -v
   - docker ps -a
@@ -18,9 +18,9 @@ before_script:
 
 # production build
 script:
-  - docker build -t roblobob/devops-passphrases-proxy ./proxy/Dockerfile
-  - docker build -t roblobob/devops-passphrases-api ./backend/Dockerfile.gunicorn
-  - docker build -t roblobob/devops-passphrases-frontend ./frontend/Dockerfile
+  - docker build -t roblobob/devops-passphrases-proxy ./proxy
+  - docker build -t roblobob/devops-passphrases-api ./backend -f Dockerfile.gunicorn
+  - docker build -t roblobob/devops-passphrases-frontend ./frontend
 # push to docker hub
 # after_script:
 
