@@ -1,5 +1,3 @@
-# FIXME: nginx config test failing
-
 language: ruby
 
 services:
@@ -15,15 +13,27 @@ before_install:
 
 # run tests
 before_script:
+  # FIXME: nginx config test failing
   # - docker run -t proxy-testing /bin/sh -c "nginx -vtc /etc/nginx/conf.d/default.conf;"
-  - docker exec api-testing /bin/sh -c "cd /usr/src/app && python -m pytest;"
+  - docker exec api-testing /bin/sh -c "cd /usr/src/app && python -m pytest -v;"
 
 # production build
 script:
-  - docker build -t roblobob/devops-passphrases-proxy ./proxy
-  - docker build -t roblobob/devops-passphrases-api -f ./backend/Dockerfile.gunicorn ./backend
-  - docker build -t roblobob/devops-passphrases-frontend ./frontend
-# push to docker hub
-# after_script:
+  # nginx reverse proxy
+  - docker build -t roblobob/passphrases-proxy:$TRAVIS_COMMIT ./proxy
+  - docker build -t roblobob/passphrases-proxy:latest ./proxy
 
+  # python flask api
+  - docker build -t roblobob/passphrases-api:$TRAVIS_COMMIT -f ./backend/Dockerfile.gunicorn ./backend
+  - docker build -t roblobob/passphrases-api:latest -f ./backend/Dockerfile.gunicorn ./backend
+
+  # node nextjs frontend
+  - docker build -t roblobob/passphrases-frontend:$TRAVIS_COMMIT ./frontend
+  - docker build -t roblobob/passphrases-frontend:latest ./frontend
+
+deploy:
+  provider: script
+  script: bash docker_push.sh
+  on:
+    branch: master
 
