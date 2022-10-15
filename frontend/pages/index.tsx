@@ -9,7 +9,7 @@ import OptionsBar from "../components/options"
 import Error from "../components/error"
 import ApiUrl from "../components/apiurl"
 import { getApiBaseUrl } from "../config"
-import reducer from "../state/reducer"
+import reducer, { actionTypes } from "../state/reducer"
 
 const buildApiUrl = (options: OptionsObj) =>
   `${getApiBaseUrl()}` +
@@ -38,18 +38,21 @@ const Home: NextPage = () => {
   const [state, fetch] = useReducer(reducer, initialState)
 
   const fetchPhrases = () => {
-    fetch({ type: "SET_API_URL", payload: buildApiUrl(state.options) })
-    fetch({ type: "SET_LOADING", payload: true })
+    fetch({
+      type: actionTypes.SET_API_URL,
+      payload: buildApiUrl(state.options)
+    })
+    fetch({ type: actionTypes.SET_LOADING, payload: true })
     axios
       .get(state.apiURL)
       .then((res) => {
-        fetch({ type: "API_FETCH", payload: res.data })
+        fetch({ type: actionTypes.API_FETCH, payload: res.data })
       })
       .catch((err) => {
-        fetch({ type: "API_ERROR", payload: err })
+        fetch({ type: actionTypes.API_ERROR, payload: err })
       })
       .then(() => {
-        fetch({ type: "SET_LOADING", payload: false })
+        fetch({ type: actionTypes.SET_LOADING, payload: false })
       })
 
     console.log(state)

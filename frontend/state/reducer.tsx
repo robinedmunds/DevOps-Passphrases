@@ -1,33 +1,34 @@
 import type { PhraseObj } from "../interfaces"
 
-const types = {
+const actionTypes = {
   SET_OPTIONS: "SET_OPTIONS",
-  API_FETCH: "API_FETCH",
-  API_ERROR: "API_ERROR",
   SET_API_URL: "SET_API_URL",
-  SET_LOADING: "SET_LOADING"
+  SET_LOADING: "SET_LOADING",
+  API_FETCH: "API_FETCH",
+  API_ERROR: "API_ERROR"
 }
 
 const reducer = (state: any, action: any) => {
   switch (action.type) {
-    case types.SET_OPTIONS:
+    case actionTypes.SET_OPTIONS:
       return { ...state, options: action.payload }
-    case types.SET_API_URL:
+    case actionTypes.SET_API_URL:
       return { ...state, apiURL: action.payload }
-    case types.SET_LOADING:
+    case actionTypes.SET_LOADING:
       return { ...state, isLoading: action.payload }
-    case types.API_FETCH:
+    case actionTypes.API_FETCH:
       return {
         ...state,
         apiError: null,
         wordlists: action.payload.wordlists_available,
         phrases: action.payload.phrases.phrases.map((o: PhraseObj) => o.phrase)
       }
-    case types.API_ERROR:
+    case actionTypes.API_ERROR:
       return { ...state, apiError: action.payload }
     default:
       return state
   }
 }
 
+export { actionTypes }
 export default reducer
