@@ -8,13 +8,19 @@ import LoopIcon from "@mui/icons-material/Loop"
 import Select, { SelectChangeEvent } from "@mui/material/Select"
 import type { OptionsObj } from "../interfaces"
 import { theme } from "../theme"
+import { useRef } from "react"
 
 const OptionsBar = (props: {
   wordLists: string[]
   options: OptionsObj
   setOptions: any
   fetchPhrases: any
+  fetch: (action) => void
 }) => {
+  const options = useRef({ ...props })
+  const setOptions = (opts: any) => {
+    options.current = opts
+  }
   const SEPARATORS: {
     label: string
     value: string
@@ -43,13 +49,14 @@ const OptionsBar = (props: {
 
   const handleChange = (event: SelectChangeEvent) => {
     if (event.target.name === "select-word-count")
-      props.setOptions({ ...props.options, wordCount: event.target.value })
+      setOptions({ ...props.options, wordCount: event.target.value })
     if (event.target.name === "select-phrase-count")
-      props.setOptions({ ...props.options, phraseCount: event.target.value })
+      setOptions({ ...props.options, phraseCount: event.target.value })
     if (event.target.name === "select-wordlist")
-      props.setOptions({ ...props.options, wordlist: event.target.value })
+      setOptions({ ...props.options, wordlist: event.target.value })
     if (event.target.name === "select-separator")
-      props.setOptions({ ...props.options, separator: event.target.value })
+      setOptions({ ...props.options, separator: event.target.value })
+    props.fetch({ type: "SET_OPTIONS", payload: options.current })
   }
 
   const renderNumberMenuItems = (sliceStart: number, sliceEnd: number) =>
