@@ -1,3 +1,4 @@
+import { useRef } from "react"
 import Container from "@mui/material/Container"
 import Stack from "@mui/material/Stack"
 import InputLabel from "@mui/material/InputLabel"
@@ -8,12 +9,10 @@ import LoopIcon from "@mui/icons-material/Loop"
 import Select, { SelectChangeEvent } from "@mui/material/Select"
 import type { OptionsObj } from "../interfaces"
 import { theme } from "../theme"
-import { useRef } from "react"
 
 const OptionsBar = (props: {
   wordLists: string[]
   options: OptionsObj
-  setOptions: any
   fetchPhrases: any
   fetch: (action) => void
 }) => {

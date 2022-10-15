@@ -1,15 +1,15 @@
-import { useEffect, useState, useRef, useReducer } from "react"
+import { useEffect, useReducer } from "react"
 import type { NextPage } from "next"
 import Head from "next/head"
 import axios from "axios"
-import type { PhraseObj, OptionsObj } from "../interfaces"
+import type { OptionsObj } from "../interfaces"
 import Hero from "../components/hero"
 import Phrases from "../components/phrases"
 import OptionsBar from "../components/options"
 import Error from "../components/error"
 import ApiUrl from "../components/apiurl"
 import { getApiBaseUrl } from "../config"
-import reducer from "../hooks/usePhrases"
+import reducer from "../state/reducer"
 
 const buildApiUrl = (options: OptionsObj) =>
   `${getApiBaseUrl()}` +
@@ -36,39 +36,27 @@ const initialState = {
 
 const Home: NextPage = () => {
   const [state, fetch] = useReducer(reducer, initialState)
-  // const [options, setOptions] = useState({
-  //   phraseCount: 5,
-  //   wordCount: 4,
-  //   separator: encodeURIComponent(" "),
-  //   wordlist: "eff_short_wordlist_1.txt"
-  // })
-  // const apiURL = useRef(buildApiUrl(options))
-  // const [isLoading, setIsLoading] = useState(true)
-  // const [apiError, setApiError] = useState(null)
-  // const [phrases, setPhrases] = useState([])
-  // const [wordlists, setWordlists] = useState([])
 
-  // const fetchPhrases = () => {
-  //   setApiError(null)
-  //   setIsLoading(true)
-  //   apiURL.current = buildApiUrl(options)
+  const fetchPhrases = () => {
+    fetch({ type: "SET_API_URL", payload: buildApiUrl(state.options) })
+    fetch({ type: "SET_LOADING", payload: true })
+    axios
+      .get(state.apiURL)
+      .then((res) => {
+        fetch({ type: "API_FETCH", payload: res.data })
+      })
+      .catch((err) => {
+        fetch({ type: "API_ERROR", payload: err })
+      })
+      .then(() => {
+        fetch({ type: "SET_LOADING", payload: false })
+      })
 
-  //   axios
-  //     .get(apiURL.current)
-  //     .then((res) => {
-  //       setPhrases(res.data.phrases.phrases.map((o: PhraseObj) => o.phrase))
-  //       setWordlists(res.data.wordlists_available)
-  //     })
-  //     .catch((err) => {
-  //       setApiError(err)
-  //     })
-  //     .then(() => {
-  //       setIsLoading(false)
-  //     })
-  // }
+    console.log(state)
+  }
 
   useEffect(() => {
-    console.log("-------- useEffect runs")
+    fetchPhrases()
   }, [
     state.options.phraseCount,
     state.options.separator,
@@ -79,15 +67,15 @@ const Home: NextPage = () => {
   const renderPhrases = () => {
     const tempPhrases = () => {
       const phrases = []
-      for (let i = 0; i < options.phraseCount; i++) {
+      for (let i = 0; i < state.options.phraseCount; i++) {
         phrases.push("loading")
       }
       return phrases
     }
 
-    if (isLoading) return <Phrases phrases={tempPhrases()} />
-    if (apiError) return <Error error={apiError["message"]} />
-    return <Phrases phrases={phrases} />
+    if (state.isLoading) return <Phrases phrases={tempPhrases()} />
+    if (state.apiError) return <Error error={state.apiError["message"]} />
+    return <Phrases phrases={state.phrases} />
   }
 
   return (
@@ -102,14 +90,13 @@ const Home: NextPage = () => {
 
       <Hero />
       <OptionsBar
-        wordLists={["eff_short_wordlist_1.txt"]}
+        wordLists={state.wordlists || []}
         options={state.options}
         fetch={fetch}
-        // setOptions={setOptions}
-        // fetchPhrases={fetchPhrases}
+        fetchPhrases={fetchPhrases}
       />
-      {/* {renderPhrases()} */}
-      {/* <ApiUrl url={apiURL.current} /> */}
+      {renderPhrases()}
+      <ApiUrl url={state.apiURL} />
     </>
   )
 }
