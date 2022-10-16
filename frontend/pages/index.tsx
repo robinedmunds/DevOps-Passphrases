@@ -2,21 +2,12 @@ import { useEffect, useReducer } from "react"
 import type { NextPage } from "next"
 import Head from "next/head"
 import axios from "axios"
-import type { OptionsObj } from "../interfaces"
 import Hero from "../components/hero"
 import Phrases from "../components/phrases"
 import OptionsBar from "../components/options"
 import Error from "../components/error"
 import ApiUrl from "../components/apiurl"
-import { getApiBaseUrl } from "../config"
-import reducer, { actionTypes } from "../state/reducer"
-
-const buildApiUrl = (options: OptionsObj) =>
-  `${getApiBaseUrl()}` +
-  `?phrase_count=${options.phraseCount}` +
-  `&word_count=${options.wordCount}` +
-  `&separator=${options.separator}` +
-  `&wordlist=${options.wordlist}`
+import reducer, { actionTypes, buildApiUrl } from "../state/reducer"
 
 const defaultOptions = {
   phraseCount: 5,
@@ -28,20 +19,16 @@ const defaultOptions = {
 const initialState = {
   options: defaultOptions,
   apiURL: buildApiUrl(defaultOptions),
-  isLoading: true,
+  isLoading: false,
   apiError: null,
   phrases: [],
-  wordlists: []
+  wordlists: ["eff_short_wordlist_1.txt"]
 }
 
 const Home: NextPage = () => {
   const [state, fetch] = useReducer(reducer, initialState)
 
   const fetchPhrases = () => {
-    fetch({
-      type: actionTypes.SET_API_URL,
-      payload: buildApiUrl(state.options)
-    })
     fetch({ type: actionTypes.SET_LOADING, payload: true })
     axios
       .get(state.apiURL)
@@ -51,21 +38,12 @@ const Home: NextPage = () => {
       .catch((err) => {
         fetch({ type: actionTypes.API_ERROR, payload: err })
       })
-      .then(() => {
+      .finally(() => {
         fetch({ type: actionTypes.SET_LOADING, payload: false })
       })
-
-    console.log(state)
   }
 
-  useEffect(() => {
-    fetchPhrases()
-  }, [
-    state.options.phraseCount,
-    state.options.separator,
-    state.options.wordCount,
-    state.options.wordlist
-  ])
+  useEffect(fetchPhrases, [state.apiURL])
 
   const renderPhrases = () => {
     const tempPhrases = () => {
@@ -93,7 +71,7 @@ const Home: NextPage = () => {
 
       <Hero />
       <OptionsBar
-        wordLists={state.wordlists || []}
+        wordlists={state.wordlists}
         options={state.options}
         fetch={fetch}
         fetchPhrases={fetchPhrases}

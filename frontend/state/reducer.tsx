@@ -1,19 +1,28 @@
-import type { PhraseObj } from "../interfaces"
+import type { OptionsObj, PhraseObj } from "../interfaces"
+import { getApiBaseUrl } from "../config"
 
 const actionTypes = {
   SET_OPTIONS: "SET_OPTIONS",
-  SET_API_URL: "SET_API_URL",
   SET_LOADING: "SET_LOADING",
   API_FETCH: "API_FETCH",
   API_ERROR: "API_ERROR"
 }
 
+const buildApiUrl = (options: OptionsObj) =>
+  `${getApiBaseUrl()}` +
+  `?phrase_count=${options.phraseCount}` +
+  `&word_count=${options.wordCount}` +
+  `&separator=${options.separator}` +
+  `&wordlist=${options.wordlist}`
+
 const reducer = (state: any, action: any) => {
   switch (action.type) {
     case actionTypes.SET_OPTIONS:
-      return { ...state, options: action.payload }
-    case actionTypes.SET_API_URL:
-      return { ...state, apiURL: action.payload }
+      return {
+        ...state,
+        options: action.payload,
+        apiURL: buildApiUrl(action.payload)
+      }
     case actionTypes.SET_LOADING:
       return { ...state, isLoading: action.payload }
     case actionTypes.API_FETCH:
@@ -30,5 +39,5 @@ const reducer = (state: any, action: any) => {
   }
 }
 
-export { actionTypes }
+export { actionTypes, buildApiUrl }
 export default reducer

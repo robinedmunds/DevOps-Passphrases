@@ -11,7 +11,7 @@ import type { OptionsObj } from "../interfaces"
 import { theme } from "../theme"
 
 const OptionsBar = (props: {
-  wordLists: string[]
+  wordlists: string[]
   options: OptionsObj
   fetchPhrases: any
   fetch: (action) => void
@@ -89,7 +89,7 @@ const OptionsBar = (props: {
             value={`${props.options.wordlist}`}
             onChange={handleChange}
           >
-            {props.wordLists.map((i) => (
+            {props.wordlists.map((i) => (
               <MenuItem key={i} value={i}>
                 {i}
               </MenuItem>
