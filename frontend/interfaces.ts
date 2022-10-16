@@ -1,3 +1,10 @@
+type ActionTypes = {
+  SET_OPTIONS: string
+  SET_LOADING: string
+  API_FETCH: string
+  API_ERROR: string
+}
+
 interface PhraseObj {
   word_count: number
   separator: string
@@ -32,4 +39,4 @@ interface ApiResponseObj {
   }
 }
 
-export type { PhraseObj, OptionsObj, ApiResponseObj }
+export type { ActionTypes, PhraseObj, OptionsObj, ApiResponseObj }

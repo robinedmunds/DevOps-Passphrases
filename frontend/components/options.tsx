@@ -14,12 +14,9 @@ const OptionsBar = (props: {
   wordlists: string[]
   options: OptionsObj
   fetchPhrases: any
-  fetch: (action) => void
+  fetch: (arg: { type: string; payload: OptionsObj }) => void
 }) => {
-  const options = useRef({ ...props })
-  const setOptions = (opts: any) => {
-    options.current = opts
-  }
+  const options = useRef({ ...props.options })
   const SEPARATORS: {
     label: string
     value: string
@@ -48,13 +45,19 @@ const OptionsBar = (props: {
 
   const handleChange = (event: SelectChangeEvent) => {
     if (event.target.name === "select-word-count")
-      setOptions({ ...props.options, wordCount: event.target.value })
+      options.current = {
+        ...options.current,
+        wordCount: Number(event.target.value)
+      }
     if (event.target.name === "select-phrase-count")
-      setOptions({ ...props.options, phraseCount: event.target.value })
+      options.current = {
+        ...options.current,
+        phraseCount: Number(event.target.value)
+      }
     if (event.target.name === "select-wordlist")
-      setOptions({ ...props.options, wordlist: event.target.value })
+      options.current = { ...options.current, wordlist: event.target.value }
     if (event.target.name === "select-separator")
-      setOptions({ ...props.options, separator: event.target.value })
+      options.current = { ...options.current, separator: event.target.value }
     props.fetch({ type: "SET_OPTIONS", payload: options.current })
   }
 

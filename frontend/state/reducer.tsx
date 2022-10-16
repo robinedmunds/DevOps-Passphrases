@@ -1,7 +1,7 @@
-import type { OptionsObj, PhraseObj } from "../interfaces"
+import type { ActionTypes, OptionsObj, PhraseObj } from "../interfaces"
 import { getApiBaseUrl } from "../config"
 
-const actionTypes = {
+const actionTypes: ActionTypes = {
   SET_OPTIONS: "SET_OPTIONS",
   SET_LOADING: "SET_LOADING",
   API_FETCH: "API_FETCH",
